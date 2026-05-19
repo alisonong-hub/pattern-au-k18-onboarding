@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>K18 – Amazon AU Onboarding Status</title>
+  <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400;500;600;700;800&family=STIX+Two+Text:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #090A0F;
+      --deep-navy:   #00084d;
+      --surface:     #0d0f1a;
+      --surface2:    #131624;
+      --border:      rgba(255,255,255,0.08);
+      --border-mid:  rgba(255,255,255,0.12);
+      --blue:        #009bff;
+      --violet:      #770bff;
+      --sea:         #4cc3ae;
+      --green-dim:   rgba(76,195,174,0.12);
+      --amber:       #f59e0b;
+      --amber-dim:   rgba(245,158,11,0.12);
+      --red:         #ef4444;
+      --red-dim:     rgba(239,68,68,0.12);
+      --text:        #fcfcfc;
+      --muted:       rgba(255,255,255,0.45);
+      --gradient:    linear-gradient(135deg, #009bff, #770bff);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Wix Madefor Display', sans-serif;
+      min-height: 100vh;
+      padding: 0 0 60px;
+    }
+
+    /* ── Hero ────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, #00084d 0%, #090A0F 60%, #1a003a 100%);
+      border-bottom: 1px solid var(--border);
+      padding: 40px 40px 36px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--gradient);
+    }
+
+    .hero::after {
+      content: '';
+      position: absolute;
+      bottom: -60px; right: -60px;
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(119,11,255,0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-inner {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 24px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-left { display: flex; align-items: flex-start; gap: 20px; }
+
+    .pattern-mark { width: 44px; height: 44px; flex-shrink: 0; margin-top: 4px; }
+
+    .hero-titles h1 {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      color: #fff;
+    }
+
+    .hero-titles h1 .accent {
+      font-family: 'STIX Two Text', serif;
+      font-style: italic;
+      font-weight: 400;
+      color: var(--blue);
+    }
+
+    .hero-titles p {
+      margin-top: 8px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 10px;
+    }
+
+    .progress-label {
+      font-size: 0.68rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .progress-meta {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: right;
+    }
+
+    .progress-meta span { color: var(--blue); font-weight: 700; }
+
+    .progress-wrap { display: flex; align-items: center; gap: 14px; }
+
+    .progress-bar-outer {
+      width: 220px; height: 6px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .progress-bar-inner {
+      height: 100%;
+      background: var(--gradient);
+      border-radius: 10px;
+      transition: width 0.6s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .progress-pct {
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--blue);
+      min-width: 38px;
+      text-align: right;
+    }
+
+    /* ── Toolbar ─────────────────────────────────────────────── */
+    .toolbar {
+      padding: 16px 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 14px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .legend { display: flex; gap: 18px; flex-wrap: wrap; }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      font-size: 0.74rem;
+      color: var(--muted);
+      font-weight: 500;
+    }
+
+    .legend-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+
+    .click-hint { font-size: 0.68rem; color: var(--muted); opacity: 0.65; font-style: italic; }
+
+    /* ── Grid ────────────────────────────────────────────────── */
+    .grid-wrap { padding: 28px 40px; }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    @media (max-width: 1100px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px)  { .grid { grid-template-columns: 1fr; } }
+
+    /* ── Card ────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: var(--border-mid);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 14px 14px 0 0;
+    }
+
+    .card.green::before { background: var(--sea); }
+    .card.amber::before { background: var(--amber); }
+    .card.red::before   { background: var(--red); }
+    .card.grey::before  { background: var(--border-mid); }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .card-icon {
+      width: 36px; height: 36px;
+      border-radius: 9px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .card.green .card-icon { background: var(--green-dim); }
+    .card.amber .card-icon { background: var(--amber-dim); }
+    .card.red   .card-icon { background: var(--red-dim); }
+    .card.grey  .card-icon { background: var(--surface2); }
+
+    .traffic-light {
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      cursor: pointer;
+      transition: box-shadow 0.2s, transform 0.15s;
+      border: 2px solid transparent;
+      flex-shrink: 0;
+    }
+
+    .card.green .traffic-light { background: var(--sea);   box-shadow: 0 0 10px rgba(76,195,174,0.5);  border-color: rgba(76,195,174,0.4); }
+    .card.amber .traffic-light { background: var(--amber); box-shadow: 0 0 10px rgba(245,158,11,0.5);  border-color: rgba(245,158,11,0.4); }
+    .card.red   .traffic-light { background: var(--red);   box-shadow: 0 0 10px rgba(239,68,68,0.5);   border-color: rgba(239,68,68,0.4); }
+    .card.grey  .traffic-light { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.2); }
+
+    .traffic-light:hover { transform: scale(1.15); }
+
+    .card-title {
+      font-weight: 700;
+      font-size: 0.92rem;
+      color: #fff;
+      margin-bottom: 3px;
+      letter-spacing: -0.01em;
+    }
+
+    .card-subtitle {
+      font-size: 0.71rem;
+      color: var(--muted);
+      margin-bottom: 12px;
+      line-height: 1.45;
+      font-weight: 400;
+    }
+
+    .status-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 100px;
+      margin-bottom: 12px;
+    }
+
+    .badge-green { background: var(--green-dim); color: var(--sea); }
+    .badge-amber { background: var(--amber-dim); color: var(--amber); }
+    .badge-red   { background: var(--red-dim);   color: var(--red); }
+    .badge-grey  { background: var(--surface2);  color: var(--muted); }
+
+    .card-divider { height: 1px; background: var(--border); margin: 10px 0 12px; }
+
+    /* ── Tasks ───────────────────────────────────────────────── */
+    .task-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+
+    .task-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.74rem;
+      line-height: 1.45;
+      color: rgba(255,255,255,0.6);
+      cursor: pointer;
+      border-radius: 6px;
+      padding: 4px 6px;
+      transition: background 0.15s;
+      user-select: none;
+    }
+
+    .task-item:hover { background: var(--surface2); }
+
+    /* Simple checkbox — no cycling, just todo/done */
+    .task-check {
+      width: 15px; height: 15px;
+      border-radius: 4px;
+      flex-shrink: 0;
+      margin-top: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.62rem;
+      font-weight: 700;
+      transition: background 0.2s, transform 0.12s;
+      border: 1.5px solid rgba(255,255,255,0.2);
+      background: transparent;
+    }
+
+    .task-item:hover .task-check { border-color: rgba(255,255,255,0.4); }
+
+    .task-check.done {
+      background: var(--sea);
+      border-color: var(--sea);
+      color: #090A0F;
+      transform: scale(1.05);
+    }
+
+    .task-item.is-done .task-label {
+      text-decoration: line-through;
+      color: var(--muted);
+      opacity: 0.5;
+    }
+
+    /* ── Owner ───────────────────────────────────────────────── */
+    .owner {
+      font-size: 0.67rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 12px;
+    }
+
+    .owner span {
+      background: var(--surface2);
+      border: 1px solid var(--border-mid);
+      border-radius: 100px;
+      padding: 2px 9px;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── Footer ──────────────────────────────────────────────── */
+    .footer {
+      margin: 8px 40px 0;
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .footer-brand { display: flex; align-items: center; gap: 10px; }
+
+    .footer-brand-text { font-size: 0.72rem; color: var(--muted); line-height: 1.5; }
+
+    .footer-brand-text strong {
+      display: block;
+      color: rgba(255,255,255,0.7);
+      font-weight: 600;
+      font-size: 0.75rem;
+    }
+
+    .footer-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+
+    .footer-stat { display: flex; flex-direction: column; align-items: center; gap: 2px; }
+
+    .footer-stat .num {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+    }
+
+    .footer-stat .label {
+      font-size: 0.62rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .powered-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      border: 1px solid rgba(0,155,255,0.3);
+      border-radius: 100px;
+      padding: 4px 12px 4px 8px;
+      font-size: 0.65rem;
+      font-weight: 700;
+      color: var(--blue);
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .powered-badge svg { width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ── Animations ──────────────────────────────────────────── */
+    .card:nth-child(1) { animation-delay: 0.04s; }
+    .card:nth-child(2) { animation-delay: 0.08s; }
+    .card:nth-child(3) { animation-delay: 0.12s; }
+    .card:nth-child(4) { animation-delay: 0.16s; }
+    .card:nth-child(5) { animation-delay: 0.20s; }
+    .card:nth-child(6) { animation-delay: 0.24s; }
+    .card:nth-child(7) { animation-delay: 0.28s; }
+    .card:nth-child(8) { animation-delay: 0.32s; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <img src="data:image/jpeg;base64,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" class="pattern-mark" alt="Pattern" style="border-radius:10px;">
+        <div class="hero-titles">
+          <h1>K18 <span class="accent">×</span> Amazon AU</h1>
+          <p>Onboarding Status Dashboard &nbsp;·&nbsp; Updated May 2026</p>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="progress-label">Overall Progress</div>
+        <div class="progress-wrap">
+          <div class="progress-bar-outer">
+            <div class="progress-bar-inner" id="progressBar" style="width:0%"></div>
+          </div>
+          <div class="progress-pct" id="progressPct">0%</div>
+        </div>
+        <div class="progress-meta"><span id="doneTasks">0</span> / <span id="totalTasks">0</span> tasks completed</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:var(--sea)"></div> Section Complete</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--amber)"></div> In Progress</div>
+      <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div> Blocked</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(255,255,255,0.2)"></div> Pending</div>
+    </div>
+    <p class="click-hint">Click the traffic light to change a section's status &nbsp;·&nbsp; Click any task to mark it complete</p>
+  </div>
+
+  <div class="grid-wrap">
+    <div class="grid" id="cardGrid"></div>
+  </div>
+
+  <div class="footer">
+    <div class="footer-brand">
+      <div class="powered-badge">
+        <img src="data:image/jpeg;base64,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" style="width:16px;height:16px;border-radius:3px;flex-shrink:0;" alt="Pattern">
+        Powered by Pattern
+      </div>
+      <div class="footer-brand-text">
+        <strong>Pattern × K18</strong>
+        Amazon Australia &nbsp;·&nbsp; Onboarding Phase 1
+      </div>
+    </div>
+    <div class="footer-stats">
+      <div class="footer-stat">
+        <div class="num" id="statGreen" style="color:var(--sea)">0</div>
+        <div class="label">Complete</div>
+      </div>
+      <div class="footer-stat">
+        <div class="num" id="statAmber" style="color:var(--amber)">0</div>
+        <div class="label">In Progress</div>
+      </div>
+      <div class="footer-stat">
+        <div class="num" id="statRed" style="color:var(--red)">0</div>
+        <div class="label">Blocked</div>
+      </div>
+      <div class="footer-stat">
+        <div class="num" id="statGrey" style="color:var(--muted)">0</div>
+        <div class="label">Pending</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ── Data ─────────────────────────────────────────────────────
+    // All tasks start at state: 'todo' (no pre-populated progress)
+    const CARDS = [
+      {
+        icon: '💼', title: 'Commercial Setup',
+        subtitle: 'Agreements, pricing & financial configuration',
+        status: 'grey', owner: 'SEM',
+        tasks: [
+          { label: 'Partner agreement signed',           state: 'todo' },
+          { label: 'RRP pricing confirmed (0% delta)',   state: 'todo' },
+          { label: 'Wholesale costs entered into Shelf', state: 'todo' },
+          { label: 'Financial approval completed',       state: 'todo' },
+          { label: 'Bank details verified',              state: 'todo' },
+        ]
+      },
+      {
+        icon: '📦', title: 'Product Catalogue',
+        subtitle: 'Masterfile, PXM setup & ASIN mapping (10 SKUs)',
+        status: 'grey', owner: 'EPM',
+        tasks: [
+          { label: 'Onboarding spreadsheet received from brand', state: 'todo' },
+          { label: 'Masterfile created in PXM',                  state: 'todo' },
+          { label: 'Director / AH check completed',              state: 'todo' },
+          { label: 'SKU / ASIN mapping confirmed',               state: 'todo' },
+          { label: 'Browse node & variant structure set',         state: 'todo' },
+          { label: 'Uploaded to Seller Central',                  state: 'todo' },
+        ]
+      },
+      {
+        icon: '🎨', title: 'Content & Creative',
+        subtitle: 'Imagery, A+ Content & Storefront',
+        status: 'grey', owner: 'SEM',
+        tasks: [
+          { label: 'Creative brief submitted',          state: 'todo' },
+          { label: 'Hero & lifestyle images delivered', state: 'todo' },
+          { label: 'Product video uploaded',            state: 'todo' },
+          { label: 'A+ Content live',                   state: 'todo' },
+          { label: 'Amazon Storefront published',       state: 'todo' },
+        ]
+      },
+      {
+        icon: '🔍', title: 'SEO',
+        subtitle: 'Keyword research & copy optimisation',
+        status: 'grey', owner: 'SEO Team / SEM',
+        tasks: [
+          { label: 'SEO request submitted via form',        state: 'todo' },
+          { label: 'Keyword research completed',            state: 'todo' },
+          { label: 'Title, bullets & description written',  state: 'todo' },
+          { label: 'Brand review & approval (George)',      state: 'todo' },
+          { label: 'SEO copy uploaded to listings',         state: 'todo' },
+          { label: 'Backend search terms populated',        state: 'todo' },
+        ]
+      },
+      {
+        icon: '🛒', title: 'Listing Health',
+        subtitle: 'Live status, Buy Box & retail readiness',
+        status: 'grey', owner: 'SEM / EPM',
+        tasks: [
+          { label: 'All 10 SKUs live on Amazon AU',          state: 'todo' },
+          { label: 'Buy Box secured (>95%)',                 state: 'todo' },
+          { label: 'Prime eligibility confirmed',            state: 'todo' },
+          { label: 'No listing suppressions',                state: 'todo' },
+          { label: 'Retail Readiness score >= 80%',           state: 'todo' },
+          { label: 'Hero SKU (50ml Leave-In Mask) monitored to ensure in-stock rate = 10%', state: 'todo' },
+        ]
+      },
+      {
+        icon: '📊', title: 'Inventory & Supply Chain',
+        subtitle: 'Stock ordering, inbound & lead times',
+        status: 'grey', owner: 'SEM / Inventory Manager',
+        tasks: [
+          { label: 'First PO placed',                     state: 'todo' },
+          { label: 'Lead times confirmed with brand',     state: 'todo' },
+          { label: 'Inbound shipment created',            state: 'todo' },
+          { label: 'Stock received at fulfilment centre', state: 'todo' },
+          { label: '6-week WOC target set',               state: 'todo' },
+          { label: 'Replenishment cadence established',   state: 'todo' },
+        ]
+      },
+      {
+        icon: '📣', title: 'Advertising',
+        subtitle: 'Campaign setup, budgets & launch targeting',
+        status: 'grey', owner: 'Ads Strategist',
+        tasks: [
+          { label: 'Launch budget approved',      state: 'todo' },
+          { label: 'Sponsored Products campaigns live',  state: 'todo' },
+          { label: 'Sponsored Brands campaigns live',    state: 'todo' },
+          { label: 'Playbook assigned & named correctly', state: 'todo' },
+          { label: 'Initial keyword targets loaded',     state: 'todo' },
+        ]
+      },
+      {
+        icon: '🔧', title: 'Operations & Compliance',
+        subtitle: 'Brand Registry, account health & access',
+        status: 'grey', owner: 'EPM',
+        tasks: [
+          { label: 'Brand Registry connected',          state: 'todo' },
+          { label: 'Seller Central access granted',     state: 'todo' },
+          { label: 'Account health baseline checked',   state: 'todo' },
+          { label: 'Demand forecast baseline set',      state: 'todo' },
+          { label: 'Customer service kick-off call done', state: 'todo' },
+        ]
+      }
+    ];
+
+    const SECTION_CYCLE = ['green','amber','red','grey'];
+    const SECTION_BADGE = { green:'Complete', amber:'In Progress', red:'Blocked', grey:'Pending' };
+    const SECTION_BCLS  = { green:'badge-green', amber:'badge-amber', red:'badge-red', grey:'badge-grey' };
+
+    // ── Build cards ───────────────────────────────────────────────
+    function buildCards() {
+      const grid = document.getElementById('cardGrid');
+      CARDS.forEach((c, ci) => {
+        const card = document.createElement('div');
+        card.className = `card ${c.status}`;
+        card.setAttribute('data-ci', ci);
+
+        const taskRows = c.tasks.map((t, ti) => `
+          <li class="task-item${t.state==='done'?' is-done':''}" data-ti="${ti}" onclick="toggleTask(${ci},${ti})">
+            <div class="task-check${t.state==='done'?' done':''}">${t.state==='done'?'✓':''}</div>
+            <span class="task-label">${t.label}</span>
+          </li>`).join('');
+
+        card.innerHTML = `
+          <div class="card-header">
+            <div class="card-icon">${c.icon}</div>
+            <div class="traffic-light" title="Cycle section status" onclick="cycleSection(${ci})"></div>
+          </div>
+          <div class="card-title">${c.title}</div>
+          <div class="card-subtitle">${c.subtitle}</div>
+          <span class="status-badge ${SECTION_BCLS[c.status]}" id="badge-${ci}">${SECTION_BADGE[c.status]}</span>
+          <div class="card-divider"></div>
+          <ul class="task-list" id="tasks-${ci}">${taskRows}</ul>
+          <div class="owner">Owner: <span>${c.owner}</span></div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ── Toggle task done/todo ─────────────────────────────────────
+    function toggleTask(ci, ti) {
+      const task  = CARDS[ci].tasks[ti];
+      task.state  = task.state === 'done' ? 'todo' : 'done';
+
+      const row   = document.getElementById(`tasks-${ci}`).querySelector(`[data-ti="${ti}"]`);
+      const check = row.querySelector('.task-check');
+
+      if (task.state === 'done') {
+        check.classList.add('done');
+        check.textContent = '✓';
+        row.classList.add('is-done');
+      } else {
+        check.classList.remove('done');
+        check.textContent = '';
+        row.classList.remove('is-done');
+      }
+
+      updateProgress();
+      saveState();
+    }
+
+    // ── Cycle section traffic light ───────────────────────────────
+    function cycleSection(ci) {
+      const card = document.querySelector(`[data-ci="${ci}"]`);
+      const next = SECTION_CYCLE[(SECTION_CYCLE.indexOf(CARDS[ci].status) + 1) % SECTION_CYCLE.length];
+      CARDS[ci].status = next;
+      card.className = `card ${next}`;
+      const badge = document.getElementById(`badge-${ci}`);
+      badge.className   = `status-badge ${SECTION_BCLS[next]}`;
+      badge.textContent = SECTION_BADGE[next];
+      updateSectionCounts();
+      saveState();
+    }
+
+    // ── Progress bar (task-level) ─────────────────────────────────
+    function updateProgress() {
+      let total = 0, done = 0;
+      CARDS.forEach(c => {
+        c.tasks.forEach(t => {
+          total++;
+          if (t.state === 'done') done++;
+        });
+      });
+      const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('progressPct').textContent = pct + '%';
+      document.getElementById('doneTasks').textContent   = done;
+      document.getElementById('totalTasks').textContent  = total;
+    }
+
+    // ── Section status counts (footer) ────────────────────────────
+    function updateSectionCounts() {
+      let counts = { green:0, amber:0, red:0, grey:0 };
+      CARDS.forEach(c => counts[c.status]++);
+      document.getElementById('statGreen').textContent = counts.green;
+      document.getElementById('statAmber').textContent = counts.amber;
+      document.getElementById('statRed').textContent   = counts.red;
+      document.getElementById('statGrey').textContent  = counts.grey;
+    }
+
+    // ── State persistence (URL hash) ──────────────────────────────
+    function saveState() {
+      const encoded = btoa(JSON.stringify(
+        CARDS.map(c => ({ s: c.status, t: c.tasks.map(t => t.state) }))
+      ));
+      history.replaceState(null, '', '#' + encoded);
+    }
+
+    function loadState() {
+      const hash = window.location.hash.slice(1);
+      if (!hash) return;
+      try {
+        JSON.parse(atob(hash)).forEach((cs, ci) => {
+          if (!CARDS[ci]) return;
+          CARDS[ci].status = cs.s;
+          cs.t.forEach((ts, ti) => {
+            if (CARDS[ci].tasks[ti]) CARDS[ci].tasks[ti].state = ts;
+          });
+        });
+      } catch(e) {}
+    }
+
+    // ── Init ──────────────────────────────────────────────────────
+    loadState();
+    buildCards();
+    updateProgress();
+    updateSectionCounts();
+    if (!window.location.hash) saveState();
+  </script>
+
+</body>
+</html>
